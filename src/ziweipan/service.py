@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Path, HTTPException, status
 from ziweipan.model import StarGroup, Star, Palace, ZiweiPan, PalacePanMap
-from ziweipan.store import save_star_group, get_all_star_groups, find_star_group, get_all_stars, find_star, save_ziwei_pan, get_all_ziwei_pans, find_ziwei_pan
+from ziweipan.store import save_star_group, find_all_star_groups, find_star_group, find_all_stars, find_star, save_ziwei_pan, get_all_ziwei_pans, find_ziwei_pan, find_palace
 
 
 def retrieve_all_star_groups() -> list[StarGroup]:
-    return get_all_star_groups()
+    return find_all_star_groups()
 
 
 def retrieve_star_group(star_group_id: int) -> StarGroup:
@@ -16,7 +16,7 @@ def create_star_group(group: StarGroup):
     
 
 def retrieve_all_stars() -> list[Star]:
-    return get_all_stars()
+    return find_all_stars()
 
 
 def retrieve_star(star_id: int) -> Star:
@@ -68,7 +68,7 @@ def retrieve_ziwei_pan(ziwei_pan_id: int) -> ZiweiPan:
     return find_ziwei_pan(ziwei_pan_id)
 
 
-def retrieve_ziwei_pan_position_palace(ziwei_pan_id: int, position_no: int) -> dict:
+def retrieve_ziwei_pan_palace_stars(ziwei_pan_id: int, position_no: int) -> dict:
     pan = find_ziwei_pan(ziwei_pan_id)
     palace_list = []
     palace_map = pan.palace_maps[position_no]
@@ -78,18 +78,35 @@ def retrieve_ziwei_pan_position_palace(ziwei_pan_id: int, position_no: int) -> d
 def explain_ziwei_pan_ming_palace(ziwei_pan_id: int) -> dict:
     pan = find_ziwei_pan(ziwei_pan_id)
     # palace_id = 0
-    stars = find_main_stars_from_palace(pan, 0)
+    stars = get_main_stars_from_palace(pan, 0)
     if not stars:
         # palace_id = 6
-        stars = find_main_stars_from_palace(pan, 6)
-    return {"stars": stars}
+        stars = get_main_stars_from_palace(pan, 6)
+    # jie star (35) in ming palace (0)
+    palace = find_palace(0)
+    palace_map = get_palace_pan_map_with_palace_id(pan, 0)
+    star = get_star_with_star_id(palace_map, 35)
+    if star:
+        stars.append(star)
+    return {"stars": stars, "Palace": palace.name, "JI desc": palace.ji_desc, "JI action": palace.ji_action}
 
 
-def find_main_stars_from_palace(pan: ZiweiPan, palace_id: int) -> dict:
+def get_main_stars_from_palace(pan: ZiweiPan, palace_id: int) -> list:
     for palace_map in pan.palace_maps:
         if palace_map.palace_id == palace_id:
-            return find_stars_with_type(palace_map.stars, "main")
+            return get_stars_with_type(palace_map.stars, "main")
     
 
-def find_stars_with_type(stars: list, type: str) -> list:
+def get_stars_with_type(stars: list, type: str) -> list:
     return [retrieve_star_description(star.star_id) for star in stars if star.type == type]
+
+
+def get_palace_pan_map_with_palace_id(pan: ZiweiPan, palace_id: int) -> PalacePanMap:
+    for palace_map in pan.palace_maps:
+        if palace_map.palace_id == palace_id:
+            return palace_map
+
+
+def get_star_with_star_id(palace_map: PalacePanMap, star_id: int) -> Star:
+    return [retrieve_star_description(star.star_id) for star in palace_map.stars if star.star_id == star_id]
+

@@ -6,6 +6,13 @@
 OpenYiXue是助手类软件，输出内容来自"有书网"吴明光”四天易学实战营“（免费）。感谢2775学习营第25期14"伊伊‖有书金牌班长"，高质量的课后复盘。
 
 ## Install
+
+### 生成紫薇盘
+There are a couple of ways to generate ZiWei Pan by software or online (free).
+- [Online](https://cs.qianvf.cn/tfminggaoshu).
+- Search "文墨天机", there are Android/Apple mobile app and desktop app.
+
+### development environment
 conda env create -f environment.yml
 
 ## Models
@@ -55,23 +62,23 @@ conda env create -f environment.yml
 32, '地劫', 'bad', 4, '',
 33, '天姚', 'bad', 4, '',
 34, '天刑', 'bad', 4, '',
-25, '忌', 'bad', 4, '',
+35, '忌', 'bad', 4, '忌是代表失去、空缺、固执、亏欠。忌在哪个宫，就代表和这个宫位无缘。',
 ```
 
 ```
-'palace_id', 'name'
-0, '命宫', 
-1, '兄弟',
-2, '夫妻',
-3, '子女',
-4, '财帛',
-5, '疾厄',
-6, '迁移',
-7, '仆役',
-8, '官禄',
-9, '田宅',
-10, '福德',
-11, '父母',
+'palace_id', 'name', 'ji_desc', 'ji_action'
+0, '命宫', '1、一生坎坷不顺，尤其是少年的时候过不顺利; 2、个性固执己见，不听人劝; 3、易犯小人，灾厄多，容易破财。忌通常和无缘有关，容易有不顺，有遗憾。但是上面所有忌引发的是是非非，完全都是由自己的心境、念头所造成的，物有阴阳，事有好坏，所有事情的吉凶祸福往往在于一个人的一念之间。', '化解方法（关键在于转念）： 1、避免由于过度的关注自己，而导致自己固执己见; 2、不宜出风头，低调做人做事; 3、不宜冲动创业，只宜受雇于人',
+1, '兄弟', '', '',
+2, '夫妻', '', '',
+3, '子女', '', '',
+4, '财帛', '', '',
+5, '疾厄', '', '',
+6, '迁移', '', '',
+7, '仆役', '', '',
+8, '官禄', '', '',
+9, '田宅', '', '',
+10, '福德', '', '',
+11, '父母', '', '',
 ```
 
 ```
@@ -97,7 +104,12 @@ The first palace locates at the bottom near left and follows with anti-clockwise
 ```
 
 ## Run
+start server:
 uvicorn api:app --port 8000 --app-dir=src --reload
 
+use GUI client:
 http://127.0.0.1:8000/docs
+
+user command line client:
+curl -X 'POST' 'http://localhost:8000/star -H 'accept: application/json' -H 'Content-Type: application/json' 
 

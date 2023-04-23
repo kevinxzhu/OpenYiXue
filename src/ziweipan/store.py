@@ -45,22 +45,22 @@ stars = [
     Star(star_id=32, star='地劫', type='bad', star_group_id=4, feature=''),
     Star(star_id=33, star='天姚', type='bad', star_group_id=4, feature=''),
     Star(star_id=34, star='天刑', type='bad', star_group_id=4, feature=''),
-    Star(star_id=35, star='忌', type='bad', star_group_id=4, feature=''),
+    Star(star_id=35, star='忌', type='bad', star_group_id=4, feature='忌是代表失去、空缺、固执、亏欠。忌在哪个宫，就代表和这个宫位无缘。'),
 ]
 
 palaces = [
-    Palace(palace_id=0, name='命宫'),
-    Palace(palace_id=1, name='兄弟'),
-    Palace(palace_id=2, name='夫妻'),
-    Palace(palace_id=3, name='子女'),
-    Palace(palace_id=4, name='财帛'),
-    Palace(palace_id=5, name='疾厄'),
-    Palace(palace_id=6, name='迁移'),
-    Palace(palace_id=7, name='仆役'),
-    Palace(palace_id=8, name='官禄'),
-    Palace(palace_id=9, name='田宅'),
-    Palace(palace_id=10, name='福德'),
-    Palace(palace_id=11, name='父母'),
+    Palace(palace_id=0, name='命宫', ji_desc='1、一生坎坷不顺，尤其是少年的时候过不顺利; 2、个性固执己见，不听人劝; 3、易犯小人，灾厄多，容易破财。忌通常和无缘有关，容易有不顺，有遗憾。但是上面所有忌引发的是是非非，完全都是由自己的心境、念头所造成的，物有阴阳，事有好坏，所有事情的吉凶祸福往往在于一个人的一念之间。', ji_action='化解方法（关键在于转念）： 1、避免由于过度的关注自己，而导致自己固执己见; 2、不宜出风头，低调做人做事; 3、不宜冲动创业，只宜受雇于人'),
+    Palace(palace_id=1, name='兄弟', ji_desc='', ji_action=''),
+    Palace(palace_id=2, name='夫妻', ji_desc='', ji_action=''),
+    Palace(palace_id=3, name='子女', ji_desc='', ji_action=''),
+    Palace(palace_id=4, name='财帛', ji_desc='', ji_action=''),
+    Palace(palace_id=5, name='疾厄', ji_desc='', ji_action=''),
+    Palace(palace_id=6, name='迁移', ji_desc='', ji_action=''),
+    Palace(palace_id=7, name='仆役', ji_desc='', ji_action=''),
+    Palace(palace_id=8, name='官禄', ji_desc='', ji_action=''),
+    Palace(palace_id=9, name='田宅', ji_desc='', ji_action=''),
+    Palace(palace_id=10, name='福德', ji_desc='', ji_action=''),
+    Palace(palace_id=11, name='父母', ji_desc='', ji_action=''),
 ]
 
 ziwei_pans = [
@@ -70,7 +70,7 @@ star_groups_count = 0
 star_ = 0
 ziwei_pan_count = 0
 
-def get_all_star_groups() -> list[StarGroup]:
+def find_all_star_groups() -> list[StarGroup]:
     return star_groups
 
 
@@ -92,7 +92,7 @@ def save_star_group(group: StarGroup):
     star_groups.append(group)
     
 
-def get_all_stars() -> list[Star]:
+def find_all_stars() -> list[Star]:
     return stars
 
 
@@ -128,3 +128,11 @@ def find_ziwei_pan(ziwei_pan_id: int) -> ZiweiPan:
         detail="Star with supplied ID doesn't exist",
     )
 
+def find_palace(palace_id: int) -> Palace:
+    for palace in palaces:
+        if palace.palace_id == palace_id:
+            return palace
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="Palace with supplied ID doesn't exist",
+    )

@@ -28,9 +28,11 @@ class Star(BaseModel):
 class Palace(BaseModel):
     palace_id: int
     name: str 
+    ji_desc: str
+    ji_action: str
 
     class Config:
-        schema_extra = {"example": {"palace_id": 0, "name": "命宫"}}
+        schema_extra = {"example": {"palace_id": 0, "name": "命宫", "ji_desc": "", "ji_action": ""}}
 
 
 class PalacePanMap(BaseModel):
