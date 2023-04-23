@@ -34,12 +34,11 @@ class Palace(BaseModel):
 
 
 class PalacePanMap(BaseModel):
-    ziwei_pan_id: int
     palace_id: int
     stars: List[Star] = None
 
     class Config:
-        schema_extra = {"example": {"ziwei_pan_id": 0,"palace_id": 0, "star": []}}
+        schema_extra = {"example": {"palace_id": 0, "star": []}}
 
 
 class ZiweiPan(BaseModel):

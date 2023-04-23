@@ -1,0 +1,7 @@
+curl -X 'POST' 'http://localhost:8000/ziwei-pan' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{ "ziwei_pan_id": 0, "name": "XiaoMing1", "advantage": "adv", "lunar_birth_day": "1980-06-08 01:39", "current_year": "2003", "palace_maps": []}'
+
+curl -X 'POST' 'http://localhost:8000/ziwei-pan' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{ "ziwei_pan_id": 0, "name": "XiaoMing1", "advantage": "adv", "lunar_birth_day": "1980-06-08 01:39", "current_year": "2003", "palace_maps": [{"palace_id": 0, "stars": [7,31,32,33]}, {"palace_id": 1, "stars": []}, {"palace_id": 2, "stars": []}, {"palace_id": 3, "stars": []}, {"palace_id": 4, "stars": []}, {"palace_id": 5, "stars": []}, {"palace_id": 6, "stars": [3,6]}, {"palace_id": 7, "stars": []}, {"palace_id": 8, "stars": []}, {"palace_id": 9, "stars": []}, {"palace_id": 10, "stars": []}, {"palace_id": 11, "stars": []} ]}'
+
+
+
+

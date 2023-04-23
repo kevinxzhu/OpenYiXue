@@ -42,11 +42,11 @@ def create_ziwei_pan(pan: dict) -> dict:
     pan["palace_maps"] = None 
     pan_object = ZiweiPan(**pan)
     ret_pan = save_ziwei_pan(pan_object, palace_maps)
-    pan_object.palace_maps = create_palace_maps(palace_maps, ret_pan["ziwei_pan_id"])
+    pan_object.palace_maps = create_palace_maps(palace_maps)
     return ret_pan
 
 
-def create_palace_maps(palace_maps: list, ziwei_pan_id: int) -> list[PalacePanMap]:
+def create_palace_maps(palace_maps: list) -> list[PalacePanMap]:
     new_palace_maps = []
     for palace_map_raw in palace_maps:
         palace_ids = palace_map_raw["stars"]
@@ -57,7 +57,6 @@ def create_palace_maps(palace_maps: list, ziwei_pan_id: int) -> list[PalacePanMa
             star = find_star(id)
             new_stars.append(star)
         palace_pan_map.stars = new_stars
-        palace_pan_map.ziwei_pan_id = ziwei_pan_id
         new_palace_maps.append(palace_pan_map)
     return new_palace_maps
 
