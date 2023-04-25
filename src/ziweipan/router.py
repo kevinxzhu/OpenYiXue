@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Path, HTTPException, status
 from ziweipan.model import StarGroup, Star, Palace, ZiweiPan
-from ziweipan.service import create_star_group, retrieve_all_star_groups, retrieve_star_group, retrieve_all_stars, retrieve_star, retrieve_star, retrieve_star_description, create_ziwei_pan, retrieve_all_ziwei_pans, retrieve_ziwei_pan, retrieve_ziwei_pan_palace_stars, explain_ziwei_pan_ming_palace
+from ziweipan.service import create_star_group, retrieve_all_star_groups, retrieve_star_group, retrieve_all_stars, retrieve_star, retrieve_star, retrieve_star_description, create_ziwei_pan, retrieve_all_ziwei_pans, retrieve_ziwei_pan, retrieve_ziwei_pan_palace_stars, explain_ziwei_pan_ming_palace, explain_ziwei_pan_money_palace, explain_ziwei_pan_dayun_palace
 
 router = APIRouter()
 
@@ -64,6 +64,21 @@ async def get_ziweipan_palace_stars(
 
 @router.get("/ziwei-pan/{ziwei_pan_id}/explain0", response_model=dict)
 async def explain_ziweipan_ming_palace(
-    ziwei_pan_id: int = Path(..., title="The ID of the Star to retrieve."),
+    ziwei_pan_id: int = Path(..., title="The ID of the ZeWeiPan to retrieve."),
 ) -> dict:
     return explain_ziwei_pan_ming_palace(ziwei_pan_id)
+
+
+@router.get("/ziwei-pan/{ziwei_pan_id}/explain4", response_model=dict)
+async def explain_ziweipan_ming_palace(
+    ziwei_pan_id: int = Path(..., title="The ID of the ZiWeiPan to retrieve."),
+) -> dict:
+    return explain_ziwei_pan_money_palace(ziwei_pan_id)
+
+
+@router.get("/ziwei-pan/{ziwei_pan_id}/explain-dayun/{palace_id}", response_model=dict)
+async def explain_ziweipan_ming_palace(
+    ziwei_pan_id: int = Path(..., title="The ID of the ZiWeiPan to retrieve."),
+    palace_id: int = Path(..., title="The ID of the Palace to retrieve."),
+) -> dict:
+    return explain_ziwei_pan_dayun_palace(ziwei_pan_id, palace_id)
